@@ -77,7 +77,7 @@ class HelloNode:
     def point_cloud_callback(self, point_cloud):
         self.point_cloud = point_cloud
     
-    def move_to_pose(self, pose, async=False, custom_contact_thresholds=False):
+    def move_to_pose(self, pose, async_request=False, custom_contact_thresholds=False):
         joint_names = [key for key in pose]
         point = JointTrajectoryPoint()
         point.time_from_start = rospy.Duration(0.0)
@@ -101,7 +101,7 @@ class HelloNode:
             trajectory_goal.trajectory.points = [point]
         trajectory_goal.trajectory.header.stamp = rospy.Time.now()
         self.trajectory_client.send_goal(trajectory_goal)
-        if not async: 
+        if not async_request: 
             self.trajectory_client.wait_for_result()
             #print('Received the following result:')
             #print(self.trajectory_client.get_result())
